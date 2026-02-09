@@ -1,5 +1,11 @@
 ## CARLISLE development version
 
+## CARLISLE 2.7.4
+
+### Bug Fixes
+
+- **HOMER annotation outputs with control modes**: Fix `rule all` expectations to include the `control_mode` subdirectory for HOMER annotation plots and combined q-value tables, preventing MissingInputException during dryruns. (@kopardev)
+
 ## CARLISLE 2.7.3
 
 ### New Features

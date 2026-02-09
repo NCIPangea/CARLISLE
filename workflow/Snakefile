@@ -336,21 +336,21 @@ def get_deg_motif_enrichment(wildcards):
 def get_homer_annotations_plot(wildcards):
     files=[]
     if ("macs2_narrow" in PEAKTYPE) or ("macs2_broad" in PEAKTYPE):
-        anno_m=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="macs2",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_M),
+        anno_m=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","{control_mode}","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="macs2",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_M,control_mode=CONTROL_MODES),
         files.extend(anno_m)
     if ("gopeaks_narrow" in PEAKTYPE) or ("gopeaks_broad" in PEAKTYPE):
-        anno_g=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="gopeaks",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_G),
+        anno_g=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","{control_mode}","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="gopeaks",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_G,control_mode=CONTROL_MODES),
         files.extend(anno_g)
     if ("seacr_stringent" in PEAKTYPE) or ("seacr_relaxed" in PEAKTYPE):
-        anno_s=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="seacr",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_S),
+        anno_s=expand(join(RESULTSDIR,"peaks","{qthresholds}","{peak_caller}","annotation","homer","{control_mode}","enrichment.{dupstatus}.{peak_caller_type}.png"),peak_caller="seacr",qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_S,control_mode=CONTROL_MODES),
         files.extend(anno_s)
     return files
 
 def get_combined(wildcards):
     files = []
     if ("macs2_narrow" in PEAKTYPE) or ("macs2_broad" in PEAKTYPE):
-        # Note: combined annotation doesn't have control_mode subdirectory, uses all treatment_control pairs
-        combined_m = expand(join(RESULTSDIR,"peaks","{qthresholds}","macs2","annotation","homer","{treatment_control_list}.{dupstatus}.{peak_caller_type}.annotation_qvalue.tsv"),qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_M,treatment_control_list=TREATMENT_LIST_M)
+        # Combined annotation uses all treatment_control pairs and is generated per control_mode.
+        combined_m = expand(join(RESULTSDIR,"peaks","{qthresholds}","macs2","annotation","homer","{control_mode}","{treatment_control_list}.{dupstatus}.{peak_caller_type}.annotation_qvalue.tsv"),qthresholds=QTRESHOLDS,dupstatus=DUPSTATUS,peak_caller_type=PEAKTYPE_M,treatment_control_list=TREATMENT_LIST_M,control_mode=CONTROL_MODES)
         files.extend(combined_m)
     return files
 
